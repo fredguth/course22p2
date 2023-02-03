@@ -90,7 +90,6 @@ def plot_func(f, start=-5., end=5., steps=100):
 def init_weights(m, leaky=0.):
     if isinstance(m, (nn.Conv1d,nn.Conv2d,nn.Conv3d)): init.kaiming_normal_(m.weight, a=leaky)
 
-<<<<<<< HEAD
 # %% ../nbs/11_initializing.ipynb 103
 def _lsuv_stats(hook, mod, inp, outp):
     acts = to_cpu(outp)
@@ -109,20 +108,11 @@ def lsuv_init(model, m, m_in, xb):
 def conv(ni, nf, ks=3, stride=2, act=nn.ReLU, norm=None, bias=None):
     if bias is None: bias = not isinstance(norm, (nn.BatchNorm1d,nn.BatchNorm2d,nn.BatchNorm3d))
     layers = [nn.Conv2d(ni, nf, stride=stride, kernel_size=ks, padding=ks//2, bias=bias)]
-=======
-# %% ../nbs/11_initializing.ipynb 113
-def conv(ni, nf, ks=3, stride=2, act=nn.ReLU, norm=None):
-    layers = [nn.Conv2d(ni, nf, stride=stride, kernel_size=ks, padding=ks//2, bias=norm is None)]
->>>>>>> 7b44ad1 (added fisher callback)
     if norm: layers.append(norm(nf))
     if act: layers.append(act())
     return nn.Sequential(*layers)
 
-<<<<<<< HEAD
 # %% ../nbs/11_initializing.ipynb 115
-=======
-# %% ../nbs/11_initializing.ipynb 114
->>>>>>> 7b44ad1 (added fisher callback)
 def get_model(act=nn.ReLU, nfs=None, norm=None):
     if nfs is None: nfs = [1,8,16,32,64]
     layers = [conv(nfs[i], nfs[i+1], act=act, norm=norm) for i in range(len(nfs)-1)]
